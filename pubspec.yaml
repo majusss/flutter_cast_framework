@@ -15,7 +15,6 @@ dependencies:
   meta: ^1.7.0
 
 dev_dependencies:
-  dartdoc: ^4.1.0
   flutter_test:
     sdk: flutter
   pigeon: ^3.1.0

@@ -63,7 +63,8 @@ class _QueueListItemHolderState extends State<QueueListItemHolder> {
               if (isUpdated) {
                 sub.cancel();
                 setState(() {
-                  // FIXME: I don't like how the refresh is triggered
+                  // FIXME: I don't like how the refresh is
+                  // TODO: REMOVE _hasChanged
                   _hasChanged = true;
                 });
               }
