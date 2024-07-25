@@ -1,5 +1,4 @@
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/material.dart';
 
 import '../../flutter_cast_framework.dart';
 import '../CastContext.dart';
@@ -20,12 +19,10 @@ class CastIcon extends StatefulWidget {
   _CastIconState createState() => _CastIconState();
 }
 
-Widget _getButton(String assetName, Color color) {
-  return SvgPicture.asset(
-    assetName,
+Widget _getButton(IconData icon, Color color) {
+  return Icon(
+    icon,
     color: color,
-    package: 'flutter_cast_framework',
-    semanticsLabel: 'Cast Button',
   );
 }
 
@@ -51,29 +48,27 @@ class _CastIconState extends State<CastIcon> with TickerProviderStateMixin {
     });
   }
 
-  Widget _getEmpty() => Container();
-
   Widget _getAnimatedButton() => _ConnectingIcon(color: widget.color);
 
   @override
   Widget build(BuildContext context) {
     switch (_castState) {
       case CastState.unavailable:
-        return _getButton("assets/ic_cast_24dp.svg", _disabledIconColor);
+        return _getButton(Icons.cast, _disabledIconColor);
 
       case CastState.unconnected:
-        return _getButton("assets/ic_cast_24dp.svg", widget.color);
+        return _getButton(Icons.cast, widget.color);
 
       case CastState.connecting:
         return _getAnimatedButton();
 
       case CastState.connected:
-        return _getButton("assets/ic_cast_connected_24dp.svg", widget.color);
+        return _getButton(Icons.cast_connected, widget.color);
 
       case CastState.idle:
       default:
         debugPrint("State not handled: $_castState");
-        return _getButton("assets/ic_cast_24dp.svg", _disabledIconColor);
+        return _getButton(Icons.cast, _disabledIconColor);
     }
   }
 }
@@ -88,10 +83,9 @@ class _ConnectingIcon extends StatefulWidget {
 }
 
 class _ConnectingIconState extends State<_ConnectingIcon> {
-  static final List<String> _connectingAnimationFrames = [
-    "assets/ic_cast0_24dp.svg",
-    "assets/ic_cast1_24dp.svg",
-    "assets/ic_cast2_24dp.svg",
+  static final List<IconData> _connectingAnimationFrames = [
+    Icons.cast,
+    Icons.cast_connected
   ];
 
   int _frameIndex = 0;
@@ -134,19 +128,10 @@ class _ConnectingIconState extends State<_ConnectingIcon> {
 
   @override
   Widget build(BuildContext context) {
-    String frame;
-    if (_frameIndex < _connectingAnimationFrames.length) {
-      frame = _connectingAnimationFrames[_frameIndex];
-    } else {
-      // FIXME: sometimes this number is over the length
-      debugPrint("_ConnectingIconState: FrameIndex overflow");
-      frame = _connectingAnimationFrames.last;
-    }
-
     if (isAnimating) {
       _nextFrame();
     }
 
-    return _getButton(frame, widget.color);
+    return _getButton(Icons.cast, widget.color);
   }
 }

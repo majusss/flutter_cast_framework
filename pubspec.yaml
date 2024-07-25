@@ -11,13 +11,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^0.22.0
   meta: ^1.7.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  pigeon: ^3.1.0
+  pigeon: ^21.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
