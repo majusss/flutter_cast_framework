@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../flutter_cast_framework.dart';
@@ -8,11 +10,13 @@ const Color _disabledIconColor = Color.fromARGB(255, 201, 201, 201); // gray
 
 class CastIcon extends StatefulWidget {
   final Color color;
+  final Color disabledColor;
   final FlutterCastFramework castFramework;
 
   CastIcon({
     required this.castFramework,
     this.color = _defaultIconColor,
+    this.disabledColor = _disabledIconColor,
   });
 
   @override
@@ -54,7 +58,7 @@ class _CastIconState extends State<CastIcon> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     switch (_castState) {
       case CastState.unavailable:
-        return _getButton(Icons.cast, _disabledIconColor);
+        return _getButton(Icons.cast, widget.disabledColor);
 
       case CastState.unconnected:
         return _getButton(Icons.cast, widget.color);
@@ -68,7 +72,7 @@ class _CastIconState extends State<CastIcon> with TickerProviderStateMixin {
       case CastState.idle:
       default:
         debugPrint("State not handled: $_castState");
-        return _getButton(Icons.cast, _disabledIconColor);
+        return _getButton(Icons.cast, widget.disabledColor);
     }
   }
 }
@@ -88,50 +92,30 @@ class _ConnectingIconState extends State<_ConnectingIcon> {
     Icons.cast_connected
   ];
 
-  int _frameIndex = 0;
-
-  bool isAnimating = false;
+  IconData _currentIcon = _connectingAnimationFrames[0];
 
   @override
   void initState() {
     super.initState();
-    _start();
-  }
+    Timer.periodic(
+      const Duration(milliseconds: 400),
+      (timer) {
+        if (!mounted) {
+          timer.cancel();
+          return;
+        }
 
-  _start() {
-    if (!this.mounted) return;
-
-    setState(() {
-      if (!mounted) return;
-      _frameIndex = 0;
-      isAnimating = true;
-    });
-  }
-
-  _nextFrame() async {
-    if (!mounted) return;
-
-    if (_frameIndex < _connectingAnimationFrames.length - 1) {
-      await Future.delayed(const Duration(milliseconds: 300));
-      if (mounted) {
         setState(() {
-          if (!mounted) return;
-          _frameIndex += 1;
+          _currentIcon = _currentIcon == _connectingAnimationFrames[0]
+              ? _connectingAnimationFrames[1]
+              : _connectingAnimationFrames[0];
         });
-      }
-    } else {
-      // When I reach the end, I re-start from the beginning
-      await Future.delayed(const Duration(seconds: 1));
-      _start();
-    }
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    if (isAnimating) {
-      _nextFrame();
-    }
-
-    return _getButton(Icons.cast, widget.color);
+    return _getButton(_currentIcon, widget.color);
   }
 }
