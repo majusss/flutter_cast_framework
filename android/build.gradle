@@ -1,19 +1,6 @@
 group 'com.gianlucaparadise.flutter_cast_framework'
 version '1.0-SNAPSHOT'
 
-buildscript {
-    ext.kotlin_version = '1.5.31'
-    repositories {
-        google()
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
 rootProject.allprojects {
     repositories {
         google()
@@ -42,7 +29,7 @@ android {
 dependencies {
     def lifecycle_version = "2.0.0"
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.31"
 
     api "com.google.android.gms:play-services-cast-framework:19.0.0"
 
