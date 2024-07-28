@@ -170,6 +170,8 @@ class _MyAppState extends State<MyApp> {
             CastButton(
               castFramework: castFramework,
               color: Colors.blue,
+              activeColor: Colors.green,
+              disabledColor: Colors.grey,
             ),
             _buildTitle("States"),
             Text('Cast State: $_castState'),

@@ -41,6 +41,7 @@ class QueueListItemHolder extends StatefulWidget {
 }
 
 class _QueueListItemHolderState extends State<QueueListItemHolder> {
+  // ignore: unused_field
   bool _hasChanged = false;
 
   @override
@@ -64,7 +65,6 @@ class _QueueListItemHolderState extends State<QueueListItemHolder> {
                 sub.cancel();
                 setState(() {
                   // FIXME: I don't like how the refresh is
-                  // TODO: REMOVE _hasChanged
                   _hasChanged = true;
                 });
               }

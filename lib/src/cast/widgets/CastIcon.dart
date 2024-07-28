@@ -5,18 +5,17 @@ import 'package:flutter/material.dart';
 import '../../flutter_cast_framework.dart';
 import '../CastContext.dart';
 
-const Color _defaultIconColor = Color.fromARGB(255, 255, 255, 255); // white
-const Color _disabledIconColor = Color.fromARGB(255, 201, 201, 201); // gray
-
 class CastIcon extends StatefulWidget {
   final Color color;
+  final Color activeColor;
   final Color disabledColor;
   final FlutterCastFramework castFramework;
 
   CastIcon({
     required this.castFramework,
-    this.color = _defaultIconColor,
-    this.disabledColor = _disabledIconColor,
+    required this.color,
+    required this.activeColor,
+    required this.disabledColor,
   });
 
   @override
@@ -67,7 +66,7 @@ class _CastIconState extends State<CastIcon> with TickerProviderStateMixin {
         return _getAnimatedButton();
 
       case CastState.connected:
-        return _getButton(Icons.cast_connected, widget.color);
+        return _getButton(Icons.cast_connected, widget.activeColor);
 
       case CastState.idle:
       default:
