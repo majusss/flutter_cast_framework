@@ -1,4 +1,4 @@
-package com.gianlucaparadise.flutter_cast_framework_example
+package com.example.flutter_cast_framework_example
 
 import android.content.Context
 import com.google.android.gms.cast.framework.CastOptions
@@ -9,7 +9,7 @@ import com.google.android.gms.cast.framework.SessionProvider
 class CastOptionsProvider : OptionsProvider {
     override fun getCastOptions(context: Context): CastOptions {
         return CastOptions.Builder()
-                .setReceiverApplicationId("4F8B3483")
+                .setReceiverApplicationId("1E357349")
                 .build()
     }
 
